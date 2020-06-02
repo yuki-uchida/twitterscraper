@@ -26,7 +26,7 @@ HEADERS_LIST = [
     'Mozilla/5.0 (Windows NT 5.2; RW; rv:7.0a1) Gecko/20091211 SeaMonkey/9.23a1pre'
 ]
 
-HEADER = {'User-Agent': random.choice(HEADERS_LIST)}
+HEADER = {'User-Agent': random.choice(HEADERS_LIST), 'X-Requested-With': 'XMLHttpRequest'}
 logger.info(HEADER)
 
 INIT_URL = 'https://twitter.com/search?f=tweets&vertical=default&q={q}&l={lang}'
@@ -120,7 +120,7 @@ def query_single_page(query, lang, pos, retry=50, from_user=False, timeout=60):
                         return [], None
                 else:
                     pos = None
-            except:
+            except BaseException:
                 pass
             if retry > 0:
                 logger.info('Retrying... (Attempts left: {})'.format(retry))
